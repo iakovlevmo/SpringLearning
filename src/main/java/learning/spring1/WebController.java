@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class MyController {
+public class WebController {
     private final MyComponent myComponent;
 
-    public MyController(MyComponent myComponent) {
+    public WebController(MyComponent myComponent) {
         this.myComponent = myComponent;
     }
 
