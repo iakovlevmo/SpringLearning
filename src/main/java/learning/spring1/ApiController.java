@@ -1,9 +1,6 @@
 package learning.spring1;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +18,11 @@ public class ApiController {
         for (MyData myDatum : myData) {
             myComponent.addEntry(myDatum.getName(), myDatum.getNumber());
         }
+    }
+
+    @GetMapping("/search")
+    public List<MyData> searchPhoneNumbers(@RequestParam String search) {
+        List<MyData> results = myComponent.search(search);
+        return results;
     }
 }
