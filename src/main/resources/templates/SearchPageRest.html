@@ -5,13 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div>
-    <a href="/add-page">Add user</a>
-    <b>Search user</b>
-    <a href="/add-page-rest">Add user (RestClient)</a>
-    <a href="/search-page-rest">Search user (RestClient)</a>
-</div>
-<form action="#" th:action="@{/search-page}" method="POST">
+<div><a href="/add-page">Add user</a> <a href="/search-page">Search user</a> <a href="/add-page-rest">Add user (RestClient)</a> <b>Search user (RestClient)</b></div>
+<form action="#" th:action="@{/search-page-rest}" method="POST">
     <p>
         <label for="search">Enter name/phone number:</label>
         <br>

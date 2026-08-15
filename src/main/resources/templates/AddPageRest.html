@@ -7,13 +7,13 @@
 <body>
 
 <div>
-    <b>Add user</b>
+    <a href="/add-page">Add user</a>
     <a href="/search-page">Search user</a>
-    <a href="/add-page-rest">Add user (RestClient)</a>
+    <b>Add user (RestClient)</b>
     <a href="/search-page-rest">Search user (RestClient)</a>
 </div>
 
-<form action="#" th:action="@{/add-page}" method="POST">
+<form action="#" th:action="@{/add-page-rest}" method="POST">
     <p>
         <label for="name">Enter name:</label>
         <input type="text" id="name" name="name">
