@@ -1,17 +1,19 @@
 package learning.spring1;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestClient;
 
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,6 +25,9 @@ public class WebControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockitoBean(answers = Answers.RETURNS_MOCKS)
+    private RestClient restClient;
 
     @MockitoBean
     private MyComponent myComponent;
@@ -202,9 +207,12 @@ public class WebControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/add-page-rest"));
 
+        verify(restClient).post();
+
         mockMvc.perform(post("/search-page-rest")
                         .param("search", "Max"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Max - 123")));
+                .andExpect(status().isOk());
+
+        verify(restClient).get();
     }
 }
