@@ -61,6 +61,7 @@ public class WebController {
 
         restClient.post()
                 .uri(baseUrl() + "/api/add")
+                .headers(headers -> headers.setBasicAuth("admin", "admin"))
                 .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
                 .body(List.of(entry))
                 .retrieve()

@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -63,6 +64,7 @@ public class WebControllerTest {
     @Test
     void PageOneWithHistoryRedirectsBack() throws Exception {
         mockMvc.perform(post("/add-page")
+                        .with(httpBasic("admin", "admin"))
                         .param("name", "Alice")
                         .param("phone", "1234567890"))
                 .andExpect(status().is3xxRedirection())
@@ -98,6 +100,7 @@ public class WebControllerTest {
         when(myComponent.search(anyString())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(post("/search-page")
+                        .with(httpBasic("admin", "admin"))
                         .param("search", "testquery"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("testquery")));
@@ -115,6 +118,7 @@ public class WebControllerTest {
         when(myComponent.search(anyString())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(post("/results-page")
+                        .with(httpBasic("admin", "admin"))
                         .param("search", "nobody"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("No Results Found")));
@@ -125,6 +129,7 @@ public class WebControllerTest {
         when(myComponent.search(anyString())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(post("/results-page")
+                        .with(httpBasic("admin", "admin"))
                         .param("search", "nobody"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Go back")));
@@ -157,6 +162,7 @@ public class WebControllerTest {
     @Test
     void PageOneRestWithHistoryRedirectsBack() throws Exception {
         mockMvc.perform(post("/add-page-rest")
+                        .with(httpBasic("admin", "admin"))
                         .param("name", "Alice")
                         .param("phone", "1234567890"))
                 .andExpect(status().is3xxRedirection())
@@ -190,6 +196,7 @@ public class WebControllerTest {
     void PageOneRestThenPageTwoRestFindsAddedEntry() throws Exception {
         when(myComponent.search(anyString())).thenReturn(java.util.List.of(new MyData("Max", "123")));
         mockMvc.perform(post("/add-page-rest")
+                        .with(httpBasic("admin", "admin"))
                         .param("name", "Max")
                         .param("phone", "123"))
                 .andExpect(status().is3xxRedirection())

@@ -10,6 +10,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -30,6 +31,7 @@ public class ApiControllerTest {
         String data = "[\n  {\n    \"name\": \"Maxim\",\n    \"number\": \"123\"\n  }\n]";
 
         mockMvc.perform(post("/api/add")
+                        .with(httpBasic("admin", "admin"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(data))
                 .andExpect(status().isOk());
@@ -43,6 +45,7 @@ public class ApiControllerTest {
         String data = "[\n  {\n    \"name\": \"Oleg\",\n    \"number\": \"456\"\n  }\n]";
 
         mockMvc.perform(post("/api/add")
+                        .with(httpBasic("admin", "admin"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(data))
                 .andExpect(status().isOk());
